@@ -1,4 +1,5 @@
 from collections import deque
+import heapq
 
 import itc
 import matplotlib.animation
@@ -6,22 +7,24 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from IPython.display import HTML
 
+options = {"font_size": 25, "node_size": 1000, "edgecolors": "black"}
+figsize = (16, 10)
+
 
 def anim_traversal(G, traversal):
-    options = {"font_size": 20, "node_size": 700, "edgecolors": "black"}
     for i, e in enumerate(G.edges):
         G.edges[e]['index'] = i
     t = traversal(G)
     colors, widths = t[0], t[1]
-    fig, ax = plt.subplots(figsize=(16, 10))
-    pos = nx.spring_layout(G)
+    fig, ax = plt.subplots(figsize=figsize)
+    pos = itc.graph.spring_pos(G)
     plt.close()
 
     def update(frame):
         ax.clear()
         nx.draw(G, pos, ax, width=widths[frame], node_color=colors[frame], **options)
 
-    ani = matplotlib.animation.FuncAnimation(fig, update, frames=len(colors), interval=800, repeat=True)
+    ani = matplotlib.animation.FuncAnimation(fig, update, frames=len(colors), interval=800, repeat=False)
     return HTML(ani.to_jshtml())
 
 
@@ -85,22 +88,69 @@ def anim_bfs(G):
         add_frame()
         colors[u] = 'green'
 
-    fig, ax = plt.subplots(figsize=(16, 10))
-    pos = nx.spring_layout(G)
+    fig, ax = plt.subplots(figsize=figsize)
+    pos = itc.graph.spring_pos(G)
     plt.close()
 
     def update(frame):
         ax.clear()
         ax.text(-.1, 0, f"File : {q_frames[frame]}", fontsize=25, transform=ax.transAxes)
-        nx.draw(G,
-                pos,
-                ax,
-                width=width_frames[frame],
-                node_color=colors_frames[frame],
-                with_labels=True,
-                font_size=25,
-                node_size=1000,
-                edgecolors="black")
+        nx.draw(G, pos, ax, width=width_frames[frame], node_color=colors_frames[frame], with_labels=True, **options)
 
     ani = matplotlib.animation.FuncAnimation(fig, update, frames=len(width_frames), interval=800, repeat=False)
     return HTML(ani.to_jshtml())
+
+
+def anim_graph(G, widths, dist):
+    fig, ax = plt.subplots(figsize=figsize)
+    plt.close()
+    pos = itc.graph.spring_pos(G)
+    labels = nx.get_edge_attributes(G, "weight")
+    plt.close()
+
+    def update(frame):
+        ax.clear()
+        nx.draw(G,
+                pos=pos,
+                ax=ax,
+                node_color=["green"] + (len(G) - 1) * ["white"],
+                width=widths[frame],
+                with_labels=True,
+                **options)
+        nx.draw_networkx_edge_labels(G, ax=ax, pos=pos, edge_labels=labels)
+        for v, (x, y) in pos.items():
+            ax.text(x, y + .1, dist[frame][v], fontsize=20)
+
+    ani = matplotlib.animation.FuncAnimation(fig, update, frames=len(widths), interval=800, repeat=False)
+    return HTML(ani.to_jshtml())
+
+
+def dijkstra(M, G, s):
+    for i, e in enumerate(G.edges):
+        G.edges[e]['index'] = i
+    widths = [1] * len(G.edges)
+    dist_estimated = {v: float("inf") for v in range(len(G))}
+    frame_widths, frame_dist = [], []
+    dist = [float("inf")] * len(G)
+    q = []
+    heapq.heappush(q, (0, s, s))
+    while len(q) > 0:
+        d, u, p = heapq.heappop(q)
+        if dist[u] == float("inf"):
+            if p != u:
+                widths[G[p][u]['index']] = 6
+                frame_widths.append(widths.copy())
+            dist[u] = d
+            for v in range(len(M)):
+                if M[u][v] != float("inf"):
+                    if (dv := dist[u] + M[u][v]) < dist_estimated[v]:
+                        dist_estimated[v] = dv
+                        heapq.heappush(q, (dv, v, u))
+                        dist_estimated[v] = dv
+                        frame_dist.append(dist_estimated.copy())
+    return frame_widths, frame_dist
+
+
+def anim_dijkstra(M):
+    G = itc.graph.to_nx(M)
+    return itc.graph.anim_graph(G, *itc.graph.dijkstra(M, G, 0))

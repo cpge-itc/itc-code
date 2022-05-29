@@ -7,6 +7,10 @@ import itc.graph.generate
 # plt.rcParams["figure.figsize"] = (15, 8)
 
 
+def spring_pos(G):
+    return nx.spring_layout(G, weight=None, k=2)
+
+
 def draw(G, directed=False, weighted=False):
     graph_type = nx.DiGraph() if directed else nx.Graph()
     if itc.graph.generate.is_matrix(G):  # adjacency list
@@ -17,7 +21,7 @@ def draw(G, directed=False, weighted=False):
     G = nx.from_numpy_matrix(np.array(G), create_using=graph_type)
 
     plt.clf()
-    pos = nx.spring_layout(G, weight=None, k=2)
+    pos = spring_pos(G)
     nx.draw(G,
             pos=pos,
             node_size=600,
@@ -41,7 +45,7 @@ def draw_graph(G):
 
 
 def draw_weighted_graph(G):
-    pos = nx.spring_layout(G)
+    pos = spring_pos(G)
     options = {"font_size": 20, "node_size": 700, "edgecolors": "black", "node_color": "white"}
     nx.draw(G, pos, with_labels=True, **options)
     labels = nx.get_edge_attributes(G, "weight")

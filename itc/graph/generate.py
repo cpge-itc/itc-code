@@ -7,7 +7,9 @@ import numpy as np
 def to_nx(G):
     if is_matrix(G):
         G = list_to_matrix(G)
-    return nx.from_numpy_matrix(np.array(G))
+    G = np.array(G)
+    G[G == float("inf")] = 0
+    return nx.from_numpy_matrix(G)
 
 
 def is_matrix(G):
@@ -22,9 +24,9 @@ def matrix_to_list(G):
     pass
 
 
-def list_to_matrix(G):
+def list_to_matrix(G, weighted=False):
     n = len(G)
-    M = matrix_empty(n)
+    M = matrix_empty(n, weighted=weighted)
     for i in range(n):
         for j in G[i]:
             if type(j) is tuple:
@@ -39,7 +41,7 @@ def random_nx(n=8, p=0.35, directed=False):
 
 
 def random_matrix(n=8, p=0.35, directed=False, weighted=False):
-    return list_to_matrix(random_list(n, p, directed, weighted))
+    return list_to_matrix(random_list(n, p, directed, weighted), weighted)
 
 
 def random_list(n=8, p=0.35, directed=False, weighted=False):
