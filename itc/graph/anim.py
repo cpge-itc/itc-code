@@ -1,9 +1,10 @@
 from collections import deque
-import matplotlib.pyplot as plt
+
+import itc
 import matplotlib.animation
-from IPython.display import HTML
+import matplotlib.pyplot as plt
 import networkx as nx
-import numpy as np
+from IPython.display import HTML
 
 
 def anim_traversal(G, traversal):
@@ -50,12 +51,12 @@ def dfs(G):
 
 
 def anim_dfs(G):
-    G = nx.from_numpy_matrix(np.array(G))
+    G = itc.graph.generate.to_nx(G)
     return anim_traversal(G, dfs)
 
 
 def anim_bfs(G):
-    G = nx.from_numpy_matrix(np.array(G))
+    G = itc.graph.generate.to_nx(G)
     for i, e in enumerate(G.edges):
         G.edges[e]['index'] = i
 

@@ -1,6 +1,17 @@
 import networkx as nx
 import random
 import itertools
+import numpy as np
+
+
+def to_nx(G):
+    if is_matrix(G):
+        G = list_to_matrix(G)
+    return nx.from_numpy_matrix(np.array(G))
+
+
+def is_matrix(G):
+    return all(map(lambda l: len(l) != len(G), G))
 
 
 def matrix_empty(n, weighted=False):
@@ -29,15 +40,6 @@ def random_nx(n=8, p=0.35, directed=False):
 
 def random_matrix(n=8, p=0.35, directed=False, weighted=False):
     return list_to_matrix(random_list(n, p, directed, weighted))
-    # G = matrix_empty(n, weighted)
-    # for i, j in itertools.combinations(range(n), 2):
-    #     if random.random() < p:
-    #         G[i][j] = random.randrange(1, 10) if weighted else 1
-    #     if not directed:
-    #         G[j][i] = G[i][j]
-    #     elif random.random() < p:
-    #         G[j][i] = random.randrange(1, 10) if weighted else 1
-    # return G
 
 
 def random_list(n=8, p=0.35, directed=False, weighted=False):

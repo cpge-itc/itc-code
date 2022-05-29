@@ -9,7 +9,7 @@ import itc.graph.generate
 
 def draw(G, directed=False, weighted=False):
     graph_type = nx.DiGraph() if directed else nx.Graph()
-    if all(map(lambda l: len(l) != len(G), G)):  # adjacency list
+    if itc.graph.generate.is_matrix(G):  # adjacency list
         draw(itc.graph.generate.list_to_matrix(G), directed, weighted)
         return
     G = copy.deepcopy(np.array(G))
