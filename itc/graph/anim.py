@@ -151,6 +151,6 @@ def dijkstra(M, G, s):
     return frame_widths, frame_dist
 
 
-def anim_dijkstra(M):
+def anim_dijkstra(M, start):
     G = itc.graph.to_nx(M)
-    return itc.graph.anim_graph(G, *itc.graph.dijkstra(M, G, 0))
+    return itc.graph.anim_graph(G, *itc.graph.dijkstra(M, G, start))
