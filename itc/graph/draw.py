@@ -1,21 +1,20 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import copy
+import numpy as np
+import itc.graph.generate
 
 # plt.rcParams["figure.figsize"] = (15, 8)
 
 
 def draw(G, directed=False, weighted=False):
     graph_type = nx.DiGraph() if directed else nx.Graph()
-    if all(map(lambda l: len(l) == len(G), G)):  # matrice d'adjacence
-        import copy
-        import numpy as np
-        G = copy.deepcopy(np.array(G))
-        G[G == float("inf")] = 0
-        G = nx.from_numpy_matrix(np.array(G), create_using=graph_type)
-    else:  # liste d'adjacence
-        G = nx.from_dict_of_lists(G, create_using=graph_type)
-        # G_ = nx.DiGraph() if directed else nx.Graph()
-        # G_.add_edges_from([(i, j) for i in range(len(G)) for j in G[i]])
+    if all(map(lambda l: len(l) != len(G), G)):  # adjacency list
+        draw(itc.graph.generate.list_to_matrix(G), directed, weighted)
+        return
+    G = copy.deepcopy(np.array(G))
+    G[G == float("inf")] = 0
+    G = nx.from_numpy_matrix(np.array(G), create_using=graph_type)
 
     plt.clf()
     pos = nx.spring_layout(G, weight=None, k=2)
