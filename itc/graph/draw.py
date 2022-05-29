@@ -34,11 +34,3 @@ def draw(G, directed=False, weighted=False):
         labels = nx.get_edge_attributes(G, "weight")
         nx.draw_networkx_edge_labels(G, pos=pos, edge_labels=labels)
     plt.show()
-
-
-def draw_graph(G):
-    plt.clf()
-    G_ = nx.DiGraph()
-    G_.add_edges_from([(i, j) for i in range(len(G)) for j in G[i]])
-    nx.draw_networkx(G_, font_color="w", node_color="black", node_size=600, arrowsize=35, font_size=16)
-    plt.show()

@@ -117,7 +117,7 @@ def anim_graph(G, widths, dist):
                 width=widths[frame],
                 with_labels=True,
                 **options)
-        nx.draw_networkx_edge_labels(G, ax=ax, pos=pos, edge_labels=labels)
+        nx.draw_networkx_edge_labels(G, ax=ax, pos=pos, edge_labels=labels, font_size=20)
         for v, (x, y) in pos.items():
             ax.text(x, y + .1, dist[frame][v], fontsize=20)
 
