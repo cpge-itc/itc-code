@@ -143,7 +143,8 @@ def dijkstra(M, G, s):
             dist[u] = d
             for v in range(len(M)):
                 if M[u][v] != float("inf"):
-                    if (dv := dist[u] + M[u][v]) < dist_estimated[v]:
+                    dv = dist[u] + M[u][v]
+                    if dv < dist_estimated[v]:
                         dist_estimated[v] = dv
                         heapq.heappush(q, (dv, v, u))
                         dist_estimated[v] = dv
