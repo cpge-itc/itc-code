@@ -2,7 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import copy
 import numpy as np
-import itc.graph.generate
+import cpge.graph.generate
 
 # plt.rcParams["figure.figsize"] = (15, 8)
 
@@ -13,8 +13,8 @@ def spring_pos(G):
 
 def draw(G, directed=False, weighted=False):
     graph_type = nx.DiGraph() if directed else nx.Graph()
-    if itc.graph.generate.is_matrix(G):  # adjacency list
-        draw(itc.graph.generate.list_to_matrix(G), directed, weighted)
+    if cpge.graph.generate.is_matrix(G):  # adjacency list
+        draw(cpge.graph.generate.list_to_matrix(G), directed, weighted)
         return
     G = copy.deepcopy(np.array(G))
     G[G == float("inf")] = 0

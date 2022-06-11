@@ -1,7 +1,7 @@
 from collections import deque
 import heapq
 
-import itc
+import cpge
 import matplotlib.animation
 import matplotlib.pyplot as plt
 import networkx as nx
@@ -17,7 +17,7 @@ def anim_traversal(G, traversal):
     t = traversal(G)
     colors, widths = t[0], t[1]
     fig, ax = plt.subplots(figsize=figsize)
-    pos = itc.graph.spring_pos(G)
+    pos = cpge.graph.spring_pos(G)
     plt.close()
 
     def update(frame):
@@ -54,12 +54,12 @@ def dfs(G):
 
 
 def anim_dfs(G):
-    G = itc.graph.generate.to_nx(G)
+    G = cpge.graph.generate.to_nx(G)
     return anim_traversal(G, dfs)
 
 
 def anim_bfs(G):
-    G = itc.graph.generate.to_nx(G)
+    G = cpge.graph.generate.to_nx(G)
     for i, e in enumerate(G.edges):
         G.edges[e]['index'] = i
 
@@ -89,7 +89,7 @@ def anim_bfs(G):
         colors[u] = 'green'
 
     fig, ax = plt.subplots(figsize=figsize)
-    pos = itc.graph.spring_pos(G)
+    pos = cpge.graph.spring_pos(G)
     plt.close()
 
     def update(frame):
@@ -104,7 +104,7 @@ def anim_bfs(G):
 def anim_graph(G, widths, dist):
     fig, ax = plt.subplots(figsize=figsize)
     plt.close()
-    pos = itc.graph.spring_pos(G)
+    pos = cpge.graph.spring_pos(G)
     labels = nx.get_edge_attributes(G, "weight")
     plt.close()
 
@@ -153,5 +153,5 @@ def dijkstra(M, G, s):
 
 
 def anim_dijkstra(M, start):
-    G = itc.graph.to_nx(M)
-    return itc.graph.anim_graph(G, *itc.graph.dijkstra(M, G, start))
+    G = cpge.graph.to_nx(M)
+    return cpge.graph.anim_graph(G, *cpge.graph.dijkstra(M, G, start))
