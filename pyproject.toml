@@ -1,11 +1,11 @@
 [tool.poetry]
 name = "cpge"
-version = "1.0.0"
+version = "1.0.1"
 description = "Fonctions pour le cours d'informatique commune en CPGE"
 authors = ["Quentin Fortier <qpfortier@gmail.com>"]
 license = "MIT"
-homepage = "https://github.com/fortierq/MTGScan"
-repository = "https://github.com/fortierq/MTGScan"
+homepage = "https://github.com/fortierq/itc-code"
+repository = "https://github.com/fortierq/itc-code"
 keywords = ["itc", "graphe", "cpge", "mpsi", "pcsi", "cours"]
 readme = "README.md"
 
