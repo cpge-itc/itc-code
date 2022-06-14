@@ -1,7 +1,10 @@
-from cpge.ds.priority_queue.list import PriorityList
+from cpge import PriorityQueue
 
-def test_priority_list():
-    elements = [1, 5, 4]
-    priorities = [7, 2, 9]
-    q = PriorityList(elements, priorities)
-    assert(q.take_min() == (5, 2))
+def test_priority_dict():
+    q = PriorityQueue()
+    q.add('a', 1)
+    q.add('b', 2)
+    assert(q.take_min() == 'a')
+    q.add('c', 3)
+    q.update('c', 1.5)
+    assert(q.take_min() == 'c')
