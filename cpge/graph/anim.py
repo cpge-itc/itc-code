@@ -154,4 +154,4 @@ def dijkstra(M, G, s):
 
 def anim_dijkstra(M, start):
     G = cpge.graph.to_nx(M)
-    return cpge.graph.anim_graph(G, *cpge.graph.dijkstra(M, G, start))
+    return cpge.graph.anim_graph(G, *dijkstra(M, G, start))
