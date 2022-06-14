@@ -12,7 +12,8 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.7"
 networkx = "^2.0.0"
-matplotlib = "3.2.2"
+matplotlib = "^3.2.2"
+pytest = "^7.1.2"
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.32.0"
