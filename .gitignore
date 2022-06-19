@@ -1,4 +1,3 @@
 *.pyc
 *whl
-*tar*
-dist
+dist/
