@@ -50,14 +50,14 @@ def astar(G, h):
 
 def anim_astar(G, h):
     fig, ax = plt.subplots()
-    ax.set_facecolor('white')
-    ax.axis('off')
-    ax.axis('equal')
-    ax.axis('auto')
 
     def update(frame):
         from matplotlib.colors import ListedColormap
         ax.clear()
+        ax.set_facecolor('white')
+        ax.axis('off')
+        ax.axis('equal')
+        ax.axis('auto')
         cmap = ListedColormap(["lightgray", "black", "skyblue", "limegreen"])
         ax.imshow(frame, interpolation='nearest', cmap=cmap)
 
