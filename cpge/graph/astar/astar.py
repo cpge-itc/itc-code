@@ -43,7 +43,7 @@ def astar(G, h):
             if 0 <= i_ < n and 0 <= j_ < n and G[i_][j_] == 0 and (i_, j_) in q:
                 if dist[i][j] + 1 < dist[i_][j_]:
                     dist[i_][j_] = dist[i][j] + 1
-                    q.update((i_, j_), dist[i_][j_] + ((n - i_)**2 + (n - j_)**2))
+                    q.update((i_, j_), dist[i_][j_] + h(i_, j_))
                     pred[i_][j_] = (i, j)
         G[i][j] = 2
     return frames
