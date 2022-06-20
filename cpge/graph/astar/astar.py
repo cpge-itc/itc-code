@@ -62,4 +62,5 @@ def anim_astar(G, h):
         ax.imshow(frame, interpolation='nearest', cmap=cmap)
 
     ani = matplotlib.animation.FuncAnimation(fig, update, frames=astar(G, h), interval=200, repeat=False)
+    plt.close()
     return HTML(ani.to_jshtml())
