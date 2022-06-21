@@ -16,7 +16,7 @@ def generate_grid(n):
     G[-1, -1] = 0
     return G
 
-def astar(G, h, diagonals=False):
+def astar(G, h, diagonals):
     G = deepcopy(G)
     n = len(G)
     dist = [[float("inf")]*n for _ in range(n)]
@@ -51,7 +51,7 @@ def astar(G, h, diagonals=False):
         G[i][j] = 2
     return frames
 
-def anim_astar(G, h):
+def anim_astar(G, h, diagonals=False):
     fig, ax = plt.subplots()
 
     def update(frame):
@@ -64,6 +64,6 @@ def anim_astar(G, h):
         cmap = ListedColormap(["lightgray", "black", "skyblue", "limegreen"])
         ax.imshow(frame, interpolation='nearest', cmap=cmap)
 
-    ani = matplotlib.animation.FuncAnimation(fig, update, frames=astar(G, h), interval=200, repeat=False)
+    ani = matplotlib.animation.FuncAnimation(fig, update, frames=astar(G, h, diagonals), interval=200, repeat=False)
     plt.close()
     return HTML(ani.to_jshtml())
